@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
-import {Students} from './Entities/Students'
-import {Subject} from './Entities/Subjects'
+import { Students } from './Entities/Students'
+import { Subject } from './Entities/Subjects'
 
 
 export const appDataSource = new DataSource({
@@ -11,6 +11,9 @@ export const appDataSource = new DataSource({
     password: "d930b2a2e6b38b54ea3ef09b3099da223fe197f27dde238edcbffab859936411",
     database: "d70eoltrth87l2",
     synchronize: true,
-    logging: true,
+    logging: true, 
+    ssl:{
+        rejectUnauthorized: false
+    },
     entities: [Students, Subject],
 })
