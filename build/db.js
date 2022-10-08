@@ -13,8 +13,10 @@ exports.appDataSource = new typeorm_1.DataSource({
     database: "d70eoltrth87l2",
     synchronize: true,
     logging: true,
-    ssl: {
-        rejectUnauthorized: false
+    extra: {
+        ssl: {
+            rejectUnauthorized: false
+        },
     },
     entities: [Students_1.Students, Subjects_1.Subject],
 });
