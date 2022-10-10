@@ -1,12 +1,11 @@
 import {Router} from 'express'
-import {createStudent, deleteStudent, getStudent, getStudents, UpdateStudent} from '../Controller/Students.controller'
+import {createRegistration, getRegistrations, deleteRegistration, getRegistration} from '../Controller/Registration.controller'
 
 const router = Router()
-router.post("/registration", createStudent)
-router.get("/registrations", getStudents)
-router.put("/registration/:id", UpdateStudent)
-router.delete("/registration/:id", deleteStudent)
-router.get("/registration/:id", getStudent)
+router.post("/registration", createRegistration)
+router.get("/registrations", getRegistrations)
+router.delete("/registration/:id", deleteRegistration)
+router.get("/registration/:id", getRegistration)
 
 
 export default router
