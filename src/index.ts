@@ -6,7 +6,8 @@ async function main() {
     try {
         await appDataSource.initialize();
         console.log('Database connected')
-        app.listen(3000)
+        const port = process.env.PORT || 3000
+        app.listen(port)
         console.log('Sever listen on port', 3000)
     } catch (error) {
         console.error(error)
