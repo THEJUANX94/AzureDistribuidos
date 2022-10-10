@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import { Students } from './Entities/Students'
 import { Subject } from './Entities/Subjects'
+import { Registration } from './Entities/Registration'
 
 
 export const appDataSource = new DataSource({
@@ -17,5 +18,5 @@ export const appDataSource = new DataSource({
             rejectUnauthorized: false
         },
     },
-    entities: [Students, Subject],
+    entities: [Students, Subject, Registration],
 })
