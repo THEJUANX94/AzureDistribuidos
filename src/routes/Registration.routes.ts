@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import {createRegistration, getRegistrations, deleteRegistration, getRegistration} from '../Controller/Registration.controller'
+import {createRegistration, getRegistrations, deleteRegistration, getRegistration} from '../Controller/Registraton.controller'
 
 const router = Router()
 router.post("/registration", createRegistration)
