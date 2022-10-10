@@ -20,7 +20,8 @@ function main() {
         try {
             yield db_1.appDataSource.initialize();
             console.log('Database connected');
-            app_1.default.listen(3000);
+            const port = process.env.PORT || 3000;
+            app_1.default.listen(port);
             console.log('Sever listen on port', 3000);
         }
         catch (error) {

@@ -1,82 +1,72 @@
 "use strict";
-/*import { Request, Response } from "express";
-import { Registration } from '../Entities/Registration'
-
-export const createRegistration = async (req: Request, res: Response) => {
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getRegistration = exports.deleteRegistration = exports.getRegistrations = exports.createRegistration = void 0;
+const Registration_1 = require("../Entities/Registration");
+const createRegistration = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { Document, DocumentType, FirstName, LastName, state } = req.body;
-        const student = new Students()
-        student.Document = Document
-        student.DocumentType = DocumentType
-        student.FirstName = FirstName
-        student.LastName = LastName
-        student.state = state
-
-        await student.save()
-        console.log(student)
-        return res.json(student)
-    } catch (error) {
-        if (error instanceof Error) {
-            return res.status(500).json({ message: error.message });
-        }
-
+        const { id_Students, id_Subjects, Date } = req.body;
+        const registration = new Registration_1.Registration();
+        registration.id_Students = id_Students;
+        registration.id_Subjects = id_Subjects;
+        registration.Date = Date;
+        yield registration.save();
+        console.log(registration);
+        return res.json(registration);
     }
-}
-
-export const getRegistrations = async (req: Request, res: Response) => {
-    try {
-        const students = await Students.find()
-        return res.json(students);
-    } catch (error) {
+    catch (error) {
         if (error instanceof Error) {
             return res.status(500).json({ message: error.message });
         }
     }
-}
-
-export const UpdateRegistration = async (req: Request, res: Response) => {
+});
+exports.createRegistration = createRegistration;
+const getRegistrations = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { FirstName, LastName } = req.body
-        const student = await Students.findOneBy({ id: parseInt(req.params.id) })
-        if (!student) return res.status(404).json({ message: 'user dont exists' })
-        student.FirstName = FirstName
-        student.LastName = LastName;
-
-        student.save();
-        return res.json('recibido')
-    } catch (error) {
+        const registration = yield Registration_1.Registration.find();
+        return res.json(registration);
+    }
+    catch (error) {
         if (error instanceof Error) {
-            return res.status(500).json({ message: error.message })
+            return res.status(500).json({ message: error.message });
         }
     }
-}
-
-export const deleteRegistration = async (req: Request, res: Response) => {
+});
+exports.getRegistrations = getRegistrations;
+const deleteRegistration = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id } = req.params
-
-        const result = await Students.delete({ id: parseInt(id) })
-
+        const { id_Students, id_Subjects } = req.params;
+        const result = yield Registration_1.Registration.delete({ id_Students: parseInt(id_Students), id_Subjects: parseInt(id_Subjects) });
         if (result.affected === 0) {
-            return res.status(404).json({ message: 'User not found' })
+            return res.status(404).json({ message: 'User not found' });
         }
-        return res.sendStatus(204)
-    } catch (error) {
-        if (error instanceof Error) {
-            return res.status(500).json({ message: error.message })
-        }
-
+        return res.sendStatus(204);
     }
-}
-
-export const getRegistration =async (req:Request, res: Response) => {
+    catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+});
+exports.deleteRegistration = deleteRegistration;
+const getRegistration = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const {id} = req.params
-        const student = await Students.findOneBy({id: parseInt(id)})
-        return res.json(student)
-    } catch (error) {
+        const { id_Students } = req.params;
+        const registration = yield Registration_1.Registration.findOneBy({ id_Students: parseInt(id_Students) });
+        return res.json(registration);
+    }
+    catch (error) {
         if (error instanceof Error) {
-            return res.status(500).json({message: error.message})
+            return res.status(500).json({ message: error.message });
         }
     }
-}*/ 
+});
+exports.getRegistration = getRegistration;
