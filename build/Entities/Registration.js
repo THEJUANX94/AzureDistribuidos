@@ -14,6 +14,10 @@ const typeorm_1 = require("typeorm");
 let Registration = class Registration extends typeorm_1.BaseEntity {
 };
 __decorate([
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
+], Registration.prototype, "id", void 0);
+__decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
 ], Registration.prototype, "id_Students", void 0);
