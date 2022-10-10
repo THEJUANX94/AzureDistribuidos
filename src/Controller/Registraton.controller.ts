@@ -1,19 +1,17 @@
-/*import { Request, Response } from "express";
+import { Request, Response } from "express";
 import { Registration } from '../Entities/Registration'
 
 export const createRegistration = async (req: Request, res: Response) => {
     try {
-        const { Document, DocumentType, FirstName, LastName, state } = req.body;
-        const student = new Students()
-        student.Document = Document
-        student.DocumentType = DocumentType
-        student.FirstName = FirstName
-        student.LastName = LastName
-        student.state = state
+        const { id_Students, id_Subjects, Date } = req.body;
+        const registration = new Registration()
+        registration.id_Students = id_Students
+        registration.id_Subjects = id_Subjects
+        registration.Date = Date
 
-        await student.save()
-        console.log(student)
-        return res.json(student)
+        await registration.save()
+        console.log(registration)
+        return res.json(registration)
     } catch (error) {
         if (error instanceof Error) {
             return res.status(500).json({ message: error.message });
@@ -24,8 +22,8 @@ export const createRegistration = async (req: Request, res: Response) => {
 
 export const getRegistrations = async (req: Request, res: Response) => {
     try {
-        const students = await Students.find()
-        return res.json(students);
+        const registration = await Registration.find()
+        return res.json(registration);
     } catch (error) {
         if (error instanceof Error) {
             return res.status(500).json({ message: error.message });
@@ -33,28 +31,11 @@ export const getRegistrations = async (req: Request, res: Response) => {
     }
 }
 
-export const UpdateRegistration = async (req: Request, res: Response) => {
-    try {
-        const { FirstName, LastName } = req.body
-        const student = await Students.findOneBy({ id: parseInt(req.params.id) })
-        if (!student) return res.status(404).json({ message: 'user dont exists' })
-        student.FirstName = FirstName
-        student.LastName = LastName;
-
-        student.save();
-        return res.json('recibido')
-    } catch (error) {
-        if (error instanceof Error) {
-            return res.status(500).json({ message: error.message })
-        }
-    }
-}
-
 export const deleteRegistration = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params
+        const { id_Students, id_Subjects } = req.params
 
-        const result = await Students.delete({ id: parseInt(id) })
+        const result = await Registration.delete({ id_Students: parseInt(id_Students), id_Subjects: parseInt(id_Subjects) })
 
         if (result.affected === 0) {
             return res.status(404).json({ message: 'User not found' })
@@ -68,14 +49,14 @@ export const deleteRegistration = async (req: Request, res: Response) => {
     }
 }
 
-export const getRegistration =async (req:Request, res: Response) => {
+export const getRegistration = async (req: Request, res: Response) => {
     try {
-        const {id} = req.params
-        const student = await Students.findOneBy({id: parseInt(id)})
-        return res.json(student)
+        const { id_Students } = req.params
+        const registration = await Registration.findOneBy({ id_Students: parseInt(id_Students) })
+        return res.json(registration)
     } catch (error) {
         if (error instanceof Error) {
-            return res.status(500).json({message: error.message})
+            return res.status(500).json({ message: error.message })
         }
     }
-}*/
+}
