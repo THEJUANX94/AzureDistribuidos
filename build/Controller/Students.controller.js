@@ -3,17 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getStudent = exports.deleteStudent = exports.UpdateStudent = exports.getStudents = exports.createStudent = void 0;
 const Students_1 = require("../Entities/Students");
 const createStudent = async (req, res) => {
-    var _a, _b, _c;
-    console.log((_a = req.file) === null || _a === void 0 ? void 0 : _a.path);
+    var _a, _b;
     try {
-        const { Document, DocumentType, FirstName, LastName, imagePath, state } = req.body;
+        const { Document, DocumentType, FirstName, LastName, state } = req.body;
         const student = new Students_1.Students();
         student.Document = Document;
         student.DocumentType = DocumentType;
         student.FirstName = FirstName;
         student.LastName = LastName;
-        if ((_b = req.file) === null || _b === void 0 ? void 0 : _b.path) {
-            student.imagePath = (_c = req.file) === null || _c === void 0 ? void 0 : _c.path;
+        if ((_a = req.file) === null || _a === void 0 ? void 0 : _a.path) {
+            student.imagePath = (_b = req.file) === null || _b === void 0 ? void 0 : _b.path;
         }
         student.state = state;
         await student.save();
@@ -40,14 +39,17 @@ const getStudents = async (req, res) => {
 };
 exports.getStudents = getStudents;
 const UpdateStudent = async (req, res) => {
+    var _a, _b;
     try {
-        const { FirstName, LastName, imagePath } = req.body;
+        const { FirstName, LastName } = req.body;
         const student = await Students_1.Students.findOneBy({ id: parseInt(req.params.id) });
         if (!student)
             return res.status(404).json({ message: 'user dont exists' });
         student.FirstName = FirstName;
         student.LastName = LastName;
-        student.imagePath = imagePath;
+        if ((_a = req.file) === null || _a === void 0 ? void 0 : _a.path) {
+            student.imagePath = (_b = req.file) === null || _b === void 0 ? void 0 : _b.path;
+        }
         student.save();
         return res.json('recibido');
     }
