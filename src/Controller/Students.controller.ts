@@ -3,12 +3,13 @@ import { Students } from '../Entities/Students'
 
 export const createStudent = async (req: Request, res: Response) => {
     try {
-        const { Document, DocumentType, FirstName, LastName, state } = req.body;
+        const { Document, DocumentType, FirstName, LastName, imagePath, state } = req.body;
         const student = new Students()
         student.Document = Document
         student.DocumentType = DocumentType
         student.FirstName = FirstName
         student.LastName = LastName
+        student.imagePath = imagePath
         student.state = state
 
         await student.save()
@@ -35,11 +36,12 @@ export const getStudents = async (req: Request, res: Response) => {
 
 export const UpdateStudent = async (req: Request, res: Response) => {
     try {
-        const { FirstName, LastName } = req.body
+        const { FirstName, LastName, imagePath } = req.body
         const student = await Students.findOneBy({ id: parseInt(req.params.id) })
         if (!student) return res.status(404).json({ message: 'user dont exists' })
         student.FirstName = FirstName
         student.LastName = LastName;
+        student.imagePath = imagePath
 
         student.save();
         return res.json('recibido')

@@ -35,6 +35,10 @@ __decorate([
 ], Students.prototype, "LastName", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], Students.prototype, "imagePath", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
 ], Students.prototype, "state", void 0);
 Students = __decorate([

@@ -20,5 +20,8 @@ export class Students extends BaseEntity {
     LastName: String
 
     @Column()
+    imagePath: String
+
+    @Column()
     state: boolean
 }
