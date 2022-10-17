@@ -9,7 +9,9 @@ export const createStudent = async (req: Request, res: Response) => {
         student.DocumentType = DocumentType
         student.FirstName = FirstName
         student.LastName = LastName
-        student.imagePath = imagePath
+        if (req.file?.path) {
+            student.imagePath = req.file?.path
+        }
         student.state = state
 
         await student.save()
