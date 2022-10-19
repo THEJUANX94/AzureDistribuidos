@@ -10,7 +10,7 @@ export const createStudent = async (req: Request, res: Response) => {
         student.FirstName = FirstName
         student.LastName = LastName
         if (req.file?.path) {
-            student.imagePath = req.file?.path
+            student.ImagePath = req.file?.path
         }
         student.state = state
 
@@ -44,7 +44,7 @@ export const UpdateStudent = async (req: Request, res: Response) => {
         student.FirstName = FirstName
         student.LastName = LastName;
         if (req.file?.path) {
-            student.imagePath = req.file?.path
+            student.ImagePath = req.file?.path
         }
         student.save();
         return res.json('recibido')
