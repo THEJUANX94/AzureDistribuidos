@@ -12,7 +12,7 @@ const createStudent = async (req, res) => {
         student.FirstName = FirstName;
         student.LastName = LastName;
         if ((_a = req.file) === null || _a === void 0 ? void 0 : _a.path) {
-            student.imagePath = (_b = req.file) === null || _b === void 0 ? void 0 : _b.path;
+            student.ImagePath = (_b = req.file) === null || _b === void 0 ? void 0 : _b.path;
         }
         student.state = state;
         await student.save();
@@ -48,7 +48,7 @@ const UpdateStudent = async (req, res) => {
         student.FirstName = FirstName;
         student.LastName = LastName;
         if ((_a = req.file) === null || _a === void 0 ? void 0 : _a.path) {
-            student.imagePath = (_b = req.file) === null || _b === void 0 ? void 0 : _b.path;
+            student.ImagePath = (_b = req.file) === null || _b === void 0 ? void 0 : _b.path;
         }
         student.save();
         return res.json('recibido');

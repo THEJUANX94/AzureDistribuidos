@@ -12,7 +12,7 @@ async function main() {
         console.log('Database connected');
         const port = process.env.PORT || 3000;
         app_1.default.listen(port);
-        console.log('Sever listen on port', 3000);
+        console.log('Sever listen on port', port);
     }
     catch (error) {
         console.error(error);

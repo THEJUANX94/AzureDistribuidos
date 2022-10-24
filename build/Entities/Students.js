@@ -36,7 +36,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Students.prototype, "imagePath", void 0);
+], Students.prototype, "ImagePath", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Boolean)
