@@ -5,6 +5,7 @@ import path from 'path';
 import studentsRoutes from './routes/Students.routes'
 import subjectsRoutes from './routes/Subjects.routes'
 import registrationRoutes from './routes/Registration.routes'
+import authRoutes from "./routes/Auth.routes";
 import router from './routes/Principal.routes'
 
 
@@ -17,6 +18,7 @@ app.use(express.json())
 app.use(studentsRoutes)
 app.use(subjectsRoutes)
 app.use(registrationRoutes)
+app.use(authRoutes)
 app.use(router)
 
 app.use('/uploads', express.static(path.resolve('uploads')));
