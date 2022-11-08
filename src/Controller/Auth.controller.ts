@@ -6,7 +6,7 @@ export const signup = async (req: Request, res: Response) =>{
     const {Mail, Password} = req.body;
     const user = new Authentication();
     user.Mail = Mail;
-    if(req.body.passwordUser){
+    if(req.body.Password){
         user.Password = await user.encryptPassword(Password);
     }
 
