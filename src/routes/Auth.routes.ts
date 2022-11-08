@@ -1,8 +1,8 @@
-import { Router } from "express";
-const router :Router = Router();
-
+import { Router } from 'express';
 import {signup, signin, profile} from '../Controller/Auth.controller'
 import { TokenValidation } from "../libs/verifyToken";
+
+const router = Router();
 
 router.post('/signup', signup);
 router.post('/signin', signin) ;
