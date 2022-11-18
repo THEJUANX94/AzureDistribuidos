@@ -10,7 +10,7 @@ const signup = async (req, res) => {
     const { Mail, Password } = req.body;
     const user = new Auth_1.Authentication();
     user.Mail = Mail;
-    if (req.body.passwordUser) {
+    if (req.body.Password) {
         user.Password = await user.encryptPassword(Password);
     }
     await user.save();
@@ -20,11 +20,11 @@ const signup = async (req, res) => {
 exports.signup = signup;
 const signin = async (req, res) => {
     try {
-        if (req.body.mailUser && req.body.passwordUser) {
+        if (req.body.Mail && req.body.Password) {
             const user = await Auth_1.Authentication.findOneBy({ Mail: req.body.Mail });
             if (!user)
                 return res.status(400).json('Email or password is wrong');
-            const correctPassword = await user.validatePassword(req.body.passwordUser);
+            const correctPassword = await user.validatePassword(req.body.Password);
             const token = jsonwebtoken_1.default.sign({ Mail: user.Mail }, process.env.TOKEN_SECRET || 'tokentest', {
                 expiresIn: 60 * 60 * 24
             });
