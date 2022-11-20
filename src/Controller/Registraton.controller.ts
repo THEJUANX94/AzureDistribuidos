@@ -24,7 +24,9 @@ export const createRegistration = async (req: Request, res: Response) => {
 
 export const getRegistrations = async (req: Request, res: Response) => {
     try {
-        const client = createClient();
+        const client = createClient({
+            url : 'redis://default:sUNCCLtMzr4e7Ca2K8ADSTn9TKc7uLPS@redis-16497.c282.east-us-mz.azure.cloud.redislabs.com:16497'
+        });
         client.connect();
         const reply = await client.get("registrations")
         if (reply) return res.send(JSON.parse(reply));

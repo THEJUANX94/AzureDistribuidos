@@ -23,7 +23,9 @@ const createRegistration = async (req, res) => {
 exports.createRegistration = createRegistration;
 const getRegistrations = async (req, res) => {
     try {
-        const client = (0, redis_1.createClient)();
+        const client = (0, redis_1.createClient)({
+            url: 'redis://default:sUNCCLtMzr4e7Ca2K8ADSTn9TKc7uLPS@redis-16497.c282.east-us-mz.azure.cloud.redislabs.com:16497'
+        });
         client.connect();
         const reply = await client.get("registrations");
         if (reply)
