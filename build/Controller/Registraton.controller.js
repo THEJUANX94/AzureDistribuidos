@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRegistration = exports.deleteRegistration = exports.getRegistrations = exports.createRegistration = void 0;
 const Registration_1 = require("../Entities/Registration");
+const redis_1 = require("redis");
 const createRegistration = async (req, res) => {
     try {
         const { id_Students, id_Subjects, Date } = req.body;
@@ -22,8 +23,17 @@ const createRegistration = async (req, res) => {
 exports.createRegistration = createRegistration;
 const getRegistrations = async (req, res) => {
     try {
+        const client = (0, redis_1.createClient)();
+        client.connect();
+        const reply = await client.get("registrations");
+        if (reply)
+            return res.send(JSON.parse(reply));
         const registration = await Registration_1.Registration.find();
-        return res.json(registration);
+        const saveResult = await client.set("registrations", JSON.stringify(registration), {
+            EX: 15,
+        });
+        console.log(saveResult);
+        res.json(registration);
     }
     catch (error) {
         if (error instanceof Error) {

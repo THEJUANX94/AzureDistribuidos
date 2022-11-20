@@ -7,14 +7,14 @@ import subjectsRoutes from './routes/Subjects.routes'
 import registrationRoutes from './routes/Registration.routes'
 import authRoutes from "./routes/Auth.routes";
 import router from './routes/Principal.routes'
-
+import responseTime from "response-time";
 
 const app = express() 
 
 app.use(morgan('dev'))
 app.use(cors())
 app.use(express.json())
-
+app.use(responseTime())
 app.use(studentsRoutes)
 app.use(subjectsRoutes)
 app.use(registrationRoutes)

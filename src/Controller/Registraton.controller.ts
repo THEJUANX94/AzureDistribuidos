@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { Registration } from '../Entities/Registration'
+import { createClient } from 'redis';
+
 
 export const createRegistration = async (req: Request, res: Response) => {
     try {
@@ -22,8 +24,20 @@ export const createRegistration = async (req: Request, res: Response) => {
 
 export const getRegistrations = async (req: Request, res: Response) => {
     try {
+        const client = createClient();
+        client.connect();
+        const reply = await client.get("registrations")
+        if (reply) return res.send(JSON.parse(reply));
+
         const registration = await Registration.find()
-        return res.json(registration);
+        const saveResult = await client.set("registrations", JSON.stringify(registration),
+            {
+                EX: 15,
+            }
+        );
+        console.log(saveResult)
+        res.json(registration);
+
     } catch (error) {
         if (error instanceof Error) {
             return res.status(500).json({ message: error.message });
