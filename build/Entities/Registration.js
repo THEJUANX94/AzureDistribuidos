@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Registration = void 0;
 const typeorm_1 = require("typeorm");
+const Students_1 = require("./Students");
+const Subjects_1 = require("./Subjects");
 let Registration = class Registration extends typeorm_1.BaseEntity {
 };
 __decorate([
@@ -29,6 +31,15 @@ __decorate([
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
 ], Registration.prototype, "Date", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => Students_1.Students),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", Students_1.Students)
+], Registration.prototype, "student", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Subjects_1.Subject, (subject) => subject.id),
+    __metadata("design:type", Array)
+], Registration.prototype, "subjects", void 0);
 Registration = __decorate([
     (0, typeorm_1.Entity)('Registration')
 ], Registration);

@@ -3,6 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRegistration = exports.deleteRegistration = exports.getRegistrations = exports.createRegistration = void 0;
 const Registration_1 = require("../Entities/Registration");
 const redis_1 = require("redis");
+const client = (0, redis_1.createClient)({
+    url: 'redis://default:sUNCCLtMzr4e7Ca2K8ADSTn9TKc7uLPS@redis-16497.c282.east-us-mz.azure.cloud.redislabs.com:16497'
+});
+client.connect();
 const createRegistration = async (req, res) => {
     try {
         const { id_Students, id_Subjects, Date } = req.body;
@@ -23,10 +27,6 @@ const createRegistration = async (req, res) => {
 exports.createRegistration = createRegistration;
 const getRegistrations = async (req, res) => {
     try {
-        const client = (0, redis_1.createClient)({
-            url: 'redis://default:sUNCCLtMzr4e7Ca2K8ADSTn9TKc7uLPS@redis-16497.c282.east-us-mz.azure.cloud.redislabs.com:16497'
-        });
-        client.connect();
         const reply = await client.get("registrations");
         if (reply)
             return res.send(JSON.parse(reply));
