@@ -8,11 +8,12 @@ const Registration_1 = require("./Entities/Registration");
 const Auth_1 = require("./Entities/Auth");
 exports.appDataSource = new typeorm_1.DataSource({
     type: "postgres",
-    host: "ec2-3-214-2-141.compute-1.amazonaws.com",
-    port: 5432,
-    username: "vatsniztbslyfb",
-    password: "d930b2a2e6b38b54ea3ef09b3099da223fe197f27dde238edcbffab859936411",
-    database: "d70eoltrth87l2",
+    url: "postgres://db_inscriptions_user:34hHRYdm28KJtP3pmTslkJARoGsfWqD1@dpg-ce1vjcda4996ndu7oqsg-a.ohio-postgres.render.com/db_inscriptions",
+    // host: "dpg-ce1vjcda4996ndu7oqsg",
+    // port: 5432,
+    // username: "db_inscriptions_user",
+    // password: "34hHRYdm28KJtP3pmTslkJARoGsfWqD1",
+    // database: "db_inscriptions",
     synchronize: true,
     logging: true,
     extra: {

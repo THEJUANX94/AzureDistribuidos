@@ -8,6 +8,7 @@ const Auth_1 = require("../Entities/Auth");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const signup = async (req, res) => {
     const { Mail, Password } = req.body;
+    res.set('Access-Control-Allow-Origin', '*');
     const user = new Auth_1.Authentication();
     user.Mail = Mail;
     if (req.body.Password) {
