@@ -9,7 +9,7 @@
     "start": "nodemon build/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Pajaro Y Martinez",
   "license": "ISC",
   "dependencies": {
     "@types/response-time": "^2.3.5",

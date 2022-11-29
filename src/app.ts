@@ -9,10 +9,10 @@ import authRoutes from "./routes/Auth.routes";
 import router from './routes/Principal.routes'
 import responseTime from "response-time";
 
-const app = express() 
+const app = express()
 
 app.use(morgan('dev'))
-app.use(cors())
+app.use(cors());
 app.use(express.json())
 app.use(responseTime())
 app.use(studentsRoutes)

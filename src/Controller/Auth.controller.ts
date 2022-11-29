@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 
 export const signup = async (req: Request, res: Response) => {
     const { Mail, Password } = req.body;
-    res.set('Access-Control-Allow-Origin', '*')
     const user = new Authentication();
     user.Mail = Mail;
     if (req.body.Password) {
