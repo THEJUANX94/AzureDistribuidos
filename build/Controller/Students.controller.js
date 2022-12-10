@@ -1,23 +1,42 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getStudent = exports.deleteStudent = exports.UpdateStudent = exports.getStudents = exports.createStudent = void 0;
 const Students_1 = require("../Entities/Students");
+const azure_storage_1 = __importDefault(require("azure-storage"));
+const into_stream_1 = __importDefault(require("into-stream"));
 const createStudent = async (req, res) => {
     var _a, _b;
     try {
+        const blobService = azure_storage_1.default.createBlobService("DefaultEndpointsProtocol=https;AccountName=imagesdistribuidos;AccountKey=04FMn5l0Obo62znCyu5MkTNDacdQ5OnImHWigbfmNWE4fhXHRV4ifPaGQXjyFZQVrJOYCTgnsK9J+AStxOINAg==;EndpointSuffix=core.windows.net");
         const { Document, DocumentType, FirstName, LastName, state } = req.body;
         const student = new Students_1.Students();
         student.Document = Document;
         student.DocumentType = DocumentType;
         student.FirstName = FirstName;
         student.LastName = LastName;
-        if ((_a = req.file) === null || _a === void 0 ? void 0 : _a.path) {
-            student.ImagePath = (_b = req.file) === null || _b === void 0 ? void 0 : _b.path;
-        }
         student.state = state;
+        if (req.file) {
+            const getBlobName = (originalName) => {
+                const identifier = Math.random().toString().replace(/0\./, '');
+                return `${identifier}-${originalName}`;
+            };
+            const blobName = getBlobName(req.file.originalname);
+            student.ImagePath = 'https://imagesdistribuidos.blob.core.windows.net/imagenes/' + blobName;
+            const stream = (0, into_stream_1.default)((_a = req.file) === null || _a === void 0 ? void 0 : _a.buffer);
+            const streamLength = (_b = req.file) === null || _b === void 0 ? void 0 : _b.buffer.length;
+            blobService.createBlockBlobFromStream('imagenes', blobName, stream, streamLength, err => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                res.status(200).json("Guardado correctamente");
+            });
+        }
         await student.save();
         console.log(student);
-        return res.json(student);
     }
     catch (error) {
         if (error instanceof Error) {

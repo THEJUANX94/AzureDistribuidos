@@ -1,17 +1,46 @@
 import { Request, Response } from "express";
 import { Authentication } from '../Entities/Auth';
 import jwt from "jsonwebtoken";
+import { rol } from '../Entities/Role';
+
+export const createRoles = async (req: Request, res: Response) => {
+    try {
+        const rol1 = new rol()
+        const rol2 = new rol()
+        const rol3 = new rol()
+        rol1.name = 'user'
+        rol2.name = 'moderator'
+        rol3.name = 'admin'
+        rol1.save()
+        rol2.save()
+        rol3.save()
+        console.log(rol1)
+        return res.json(rol1)
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 export const signup = async (req: Request, res: Response) => {
-    const { Mail, Password } = req.body;
-    const user = new Authentication();
-    user.Mail = Mail;
+    const { Mail, Password, Roles } = req.body;
+    const auth = new Authentication();
+    auth.Mail = Mail;
     if (req.body.Password) {
-        user.Password = await user.encryptPassword(Password);
+        auth.Password = await auth.encryptPassword(Password);
     }
 
-    await user.save();
-    const token: string = jwt.sign({ Mail: user.Mail }, process.env.TOKEN_SECRET || 'tokentest');
+    const user = await Authentication.findOneBy({ Mail: req.body.Mail });
+
+    if (Roles) {
+        const foundRoles = await rol.find()
+        auth.Roles = foundRoles.map((rol: { id: number; }) => rol.id)
+    } else {
+        // const role = await rol.findOneBy({name: "user"})
+        // auth.Roles = [role.id];
+    }
+
+    await auth.save();
+    const token: string = jwt.sign({ Mail: auth.Mail }, process.env.TOKEN_SECRET || 'tokentest');
     res.header('auth_token', token).json(user);
 }
 

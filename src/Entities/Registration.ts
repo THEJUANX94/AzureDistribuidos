@@ -1,9 +1,9 @@
-import { Column, Entity, CreateDateColumn, UpdateDateColumn, BaseEntity, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany }from 'typeorm'
+import { Column, Entity, CreateDateColumn, UpdateDateColumn, BaseEntity, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany } from 'typeorm'
 import { Students } from './Students'
 import { Subject } from './Subjects'
 
 @Entity('Registration')
-export class Registration extends BaseEntity{
+export class Registration extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     id: number

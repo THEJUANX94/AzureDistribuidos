@@ -1,5 +1,6 @@
-import { Column, Entity, BaseEntity, PrimaryColumn } from 'typeorm'
+import { Column, Entity, BaseEntity, PrimaryColumn, OneToMany, JoinColumn } from 'typeorm'
 import bcrypt from "bcryptjs";
+import { rol } from './Role';
 
 
 @Entity('Authentication')
@@ -10,6 +11,9 @@ export class Authentication extends BaseEntity {
 
     @Column()
     Password: string
+
+    @OneToMany(() => rol, (rol) => rol.id)
+    Roles: rol["id"][]
 
 
     public encryptPassword = async (password: string): Promise<string> => {

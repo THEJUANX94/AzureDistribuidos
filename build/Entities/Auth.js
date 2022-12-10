@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Authentication = void 0;
 const typeorm_1 = require("typeorm");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const Role_1 = require("./Role");
 let Authentication = class Authentication extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
@@ -35,6 +36,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Authentication.prototype, "Password", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => Role_1.rol, (rol) => rol.id),
+    __metadata("design:type", Array)
+], Authentication.prototype, "Roles", void 0);
 Authentication = __decorate([
     (0, typeorm_1.Entity)('Authentication')
 ], Authentication);

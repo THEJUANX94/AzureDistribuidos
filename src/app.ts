@@ -10,7 +10,6 @@ import router from './routes/Principal.routes'
 import responseTime from "response-time";
 
 const app = express()
-
 app.use(morgan('dev'))
 app.use(cors());
 app.use(express.json())
@@ -20,6 +19,7 @@ app.use(subjectsRoutes)
 app.use(registrationRoutes)
 app.use(authRoutes)
 app.use(router)
+
 
 app.use('/uploads', express.static(path.resolve('uploads')));
 export default app
