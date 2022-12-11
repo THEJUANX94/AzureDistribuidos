@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, BaseEntity, ManyToOne } from 'typeorm'
+import { Column, Entity, PrimaryGeneratedColumn, BaseEntity, OneToMany } from 'typeorm'
 import { Authentication } from './Auth'
 
 
@@ -11,6 +11,6 @@ export class rol extends BaseEntity {
     @Column()
     name: String
 
-    @ManyToOne(() => Authentication, (auth) => auth)
-    auth: Authentication
+    @OneToMany(() => Authentication, (auth) => auth.Roles)
+    auth: Authentication[]
 }

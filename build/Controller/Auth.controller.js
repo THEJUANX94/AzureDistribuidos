@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.profile = exports.signin = exports.signup = exports.createRoles = void 0;
+exports.profile = exports.signin = exports.signup = exports.seeRoles2 = exports.seeRoles1 = exports.createRoles = void 0;
 const Auth_1 = require("../Entities/Auth");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const Role_1 = require("../Entities/Role");
@@ -18,14 +18,37 @@ const createRoles = async (req, res) => {
         rol1.save();
         rol2.save();
         rol3.save();
-        console.log(rol1);
-        return res.json(rol1);
+        return res.json(rol3);
     }
     catch (error) {
         console.error(error);
     }
 };
 exports.createRoles = createRoles;
+const seeRoles1 = async (req, res) => {
+    try {
+        const students = await Auth_1.Authentication.delete({ Mail: "josemanuelpajarovargas@gmail.com" });
+        return res.json(students);
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+};
+exports.seeRoles1 = seeRoles1;
+const seeRoles2 = async (req, res) => {
+    try {
+        const students = await Auth_1.Authentication.find();
+        return res.json(students);
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+};
+exports.seeRoles2 = seeRoles2;
 const signup = async (req, res) => {
     const { Mail, Password, Roles } = req.body;
     const auth = new Auth_1.Authentication();
@@ -36,11 +59,10 @@ const signup = async (req, res) => {
     const user = await Auth_1.Authentication.findOneBy({ Mail: req.body.Mail });
     if (Roles) {
         const foundRoles = await Role_1.rol.find();
-        auth.Roles = foundRoles.map((rol) => rol.id);
+        auth.Roles = foundRoles.map(rol => rol.id);
     }
     else {
-        // const role = await rol.findOneBy({name: "user"})
-        // auth.Roles = [role.id];
+        auth.Roles = [3];
     }
     await auth.save();
     const token = jsonwebtoken_1.default.sign({ Mail: auth.Mail }, process.env.TOKEN_SECRET || 'tokentest');

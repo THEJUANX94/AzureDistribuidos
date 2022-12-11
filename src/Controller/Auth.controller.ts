@@ -14,10 +14,31 @@ export const createRoles = async (req: Request, res: Response) => {
         rol1.save()
         rol2.save()
         rol3.save()
-        console.log(rol1)
-        return res.json(rol1)
+        return res.json(rol3)
     } catch (error) {
         console.error(error);
+    }
+}
+
+export const seeRoles1 = async (req: Request, res: Response) => {
+    try {
+        const students = await Authentication.delete({Mail: "josemanuelpajarovargas@gmail.com"})
+        return res.json(students);
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+}
+
+export const seeRoles2 = async (req: Request, res: Response) => {
+    try {
+        const students = await Authentication.find()
+        return res.json(students);
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message });
+        }
     }
 }
 
@@ -28,17 +49,15 @@ export const signup = async (req: Request, res: Response) => {
     if (req.body.Password) {
         auth.Password = await auth.encryptPassword(Password);
     }
-
     const user = await Authentication.findOneBy({ Mail: req.body.Mail });
-
     if (Roles) {
         const foundRoles = await rol.find()
-        auth.Roles = foundRoles.map((rol: { id: number; }) => rol.id)
+        auth.Roles = foundRoles.map(rol => rol.id)
     } else {
-        // const role = await rol.findOneBy({name: "user"})
-        // auth.Roles = [role.id];
+        auth.Roles = [3];
     }
 
+    
     await auth.save();
     const token: string = jwt.sign({ Mail: auth.Mail }, process.env.TOKEN_SECRET || 'tokentest');
     res.header('auth_token', token).json(user);

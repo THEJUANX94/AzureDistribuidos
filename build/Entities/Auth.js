@@ -37,7 +37,7 @@ __decorate([
     __metadata("design:type", String)
 ], Authentication.prototype, "Password", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => Role_1.rol, (rol) => rol.id),
+    (0, typeorm_1.ManyToOne)(() => Role_1.rol, (rol) => rol.id),
     __metadata("design:type", Array)
 ], Authentication.prototype, "Roles", void 0);
 Authentication = __decorate([

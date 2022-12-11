@@ -8,7 +8,7 @@ import { rol } from './Entities/Role';
 
 export const appDataSource = new DataSource({
     type: "postgres",
-    url: "postgres://db_inscriptions_user:34hHRYdm28KJtP3pmTslkJARoGsfWqD1@dpg-ce1vjcda4996ndu7oqsg-a.ohio-postgres.render.com/db_inscriptions",
+    url: "postgres://db_inscriptions_hafy_user:fcer4bUbQzhpE45ix5JW6yA2e5PLcHuE@dpg-ceb22firrk0bbtdldn8g-a.oregon-postgres.render.com/db_inscriptions_hafy",
     synchronize: true,
     logging: true,
     extra: {

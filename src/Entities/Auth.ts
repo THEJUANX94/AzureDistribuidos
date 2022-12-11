@@ -1,4 +1,4 @@
-import { Column, Entity, BaseEntity, PrimaryColumn, OneToMany, JoinColumn } from 'typeorm'
+import { Column, Entity, BaseEntity, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm'
 import bcrypt from "bcryptjs";
 import { rol } from './Role';
 
@@ -12,7 +12,7 @@ export class Authentication extends BaseEntity {
     @Column()
     Password: string
 
-    @OneToMany(() => rol, (rol) => rol.id)
+    @ManyToOne(() => rol, (rol) => rol.id)
     Roles: rol["id"][]
 
 
