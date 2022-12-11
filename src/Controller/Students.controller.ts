@@ -12,8 +12,12 @@ export const createStudent = async (req: Request, res: Response) => {
         student.DocumentType = DocumentType
         student.FirstName = FirstName
         student.LastName = LastName
-        student.state = state
-        
+        if (state == "true") {
+            student.state = true;
+        } else if (state == "false") {
+            student.state = false;
+        }
+
         if (req.file) {
             const getBlobName = (originalName: any) => {
                 const identifier = Math.random().toString().replace(/0\./, '');
@@ -28,7 +32,7 @@ export const createStudent = async (req: Request, res: Response) => {
                     console.log(err);
                     return;
                 }
-                
+
                 res.status(200).json("Guardado correctamente")
             })
 

@@ -17,7 +17,12 @@ const createStudent = async (req, res) => {
         student.DocumentType = DocumentType;
         student.FirstName = FirstName;
         student.LastName = LastName;
-        student.state = state;
+        if (state == "true") {
+            student.state = true;
+        }
+        else if (state == "false") {
+            student.state = false;
+        }
         if (req.file) {
             const getBlobName = (originalName) => {
                 const identifier = Math.random().toString().replace(/0\./, '');
