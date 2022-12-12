@@ -3,10 +3,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStudent = exports.deleteStudent = exports.UpdateStudent = exports.getStudents = exports.createStudent = void 0;
+exports.getStudent = exports.deleteStudent = exports.UpdateStudent = exports.getStudents = exports.createStudent = exports.quemarEstudiantes = void 0;
 const Students_1 = require("../Entities/Students");
 const azure_storage_1 = __importDefault(require("azure-storage"));
 const into_stream_1 = __importDefault(require("into-stream"));
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+const quemarEstudiantes = async (req, res) => {
+    var documentsRandom = 0;
+    var documentTypeRandom = ['cc', 'ti'];
+    var firtsNameRandom = ['Juan', 'Karla', 'Camilo', 'Oscar', 'Pablo', 'Angela'];
+    var lastNameRandom = ['Martinez', 'Noreña', 'Pajaro', 'Gil', 'Sosa', 'Marin'];
+    var stateRandom = ['true', 'false'];
+    var imagenes = ["https://imagesdistribuidos.blob.core.windows.net/imagenes/7857355872564389-11059544_693507024084102_1114472125510915333_n.jpg", "https://imagesdistribuidos.blob.core.windows.net/imagenes/2353379249340246-Maes_Hughes_party.JPG", "https://imagesdistribuidos.blob.core.windows.net/imagenes/6377887057524709-MF_Splash_1280x1024.jpg"];
+    for (let index = 0; index < 100000; index++) {
+        const student = new Students_1.Students();
+        documentsRandom = getRandomInt(10000000000);
+        student.Document = documentsRandom.toString();
+        student.DocumentType = documentTypeRandom[getRandomInt(2)];
+        student.FirstName = firtsNameRandom[getRandomInt(6)];
+        student.LastName = lastNameRandom[getRandomInt(6)];
+        student.state = true;
+        student.ImagePath = imagenes[getRandomInt(3)];
+        student.save();
+    }
+};
+exports.quemarEstudiantes = quemarEstudiantes;
 const createStudent = async (req, res) => {
     var _a, _b;
     try {

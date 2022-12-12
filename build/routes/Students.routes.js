@@ -12,4 +12,5 @@ router.get("/students", Students_controller_1.getStudents);
 router.put("/students/:id", Students_controller_1.UpdateStudent);
 router.delete("/students/:id", Students_controller_1.deleteStudent);
 router.get("/students/:id", Students_controller_1.getStudent);
+router.get("/Quemar", Students_controller_1.quemarEstudiantes);
 exports.default = router;

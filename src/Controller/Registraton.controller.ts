@@ -10,7 +10,6 @@ const client = createClient({
 });
 client.connect();
 
-
 export const createRegistration = async (req: Request, res: Response) => {
     try {
         const { id_Students, id_Subjects, Date } = req.body;
@@ -59,8 +58,8 @@ export const deleteRegistration = async (req: Request, res: Response) => {
         const id_Subjects = await Subject.findOneBy({ SubjectCode: Subjects_code })
 
         if (id_Students && id_Subjects) {
-            const id_Registration = await Registration.findOneBy({ id_Students: id_Students.id})
-            const result = await Registration.delete({id: id_Registration?.id})
+            const id_Registration = await Registration.findOneBy({ id_Students: id_Students.id })
+            const result = await Registration.delete({ id: id_Registration?.id })
 
             if (result.affected === 0) {
                 return res.status(404).json({ message: 'User not found' })
@@ -91,13 +90,48 @@ export const getRegistration = async (req: Request, res: Response) => {
 export const getSubjectsByStudent = async (req: Request, res: Response) => {
     try {
         const { id_Students } = req.params
+        const reply = await client.get("SubjectsByStudent")
+        if (reply) return res.send(JSON.parse(reply));
+
         var subjectsName: Subject[] = []
-        const registratios = await Registration.findBy({id_Students: parseInt(id_Students)})
+        const registratios = await Registration.findBy({ id_Students: parseInt(id_Students) })
         for (let index = 0; index < registratios.length; index++) {
             const subjects = registratios[index].id_Subjects
-            subjectsName[index] = await Subject.findOneBy({id: parseInt(subjects)}) as Subject
+            subjectsName[index] = await Subject.findOneBy({ id: parseInt(subjects) }) as Subject
         }
+        const saveResult = await client.set("SubjectsByStudent", JSON.stringify(subjectsName),
+            {
+                EX: 15,
+            }
+        );
+        console.log(saveResult);
         return res.json(subjectsName)
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message })
+        }
+    }
+}
+
+export const getStudentsBySubject = async (req: Request, res: Response) => {
+    try {
+        const { id_Subject } = req.params
+        const reply = await client.get("StudentsBySubject")
+        if (reply) return res.send(JSON.parse(reply));
+
+        var studentsName: Students[] = []
+        const registratios = await Registration.findBy({ id_Subjects: id_Subject })
+        for (let index = 0; index < registratios.length; index++) {
+            const students = registratios[index].id_Students
+            studentsName[index] = await Students.findOneBy({ id: students }) as Students
+        }
+        const saveResult = await client.set("StudentsBySubject", JSON.stringify(studentsName),
+            {
+                EX: 15,
+            }
+        );
+        console.log(saveResult);
+        return res.json(studentsName)
     } catch (error) {
         if (error instanceof Error) {
             return res.status(500).json({ message: error.message })

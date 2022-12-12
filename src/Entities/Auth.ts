@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 @Entity('Authentication')
 export class Authentication extends BaseEntity {
 
-    @PrimaryColumn()
+    @PrimaryColumn({ unique: true })
     Mail: string
 
     @Column()

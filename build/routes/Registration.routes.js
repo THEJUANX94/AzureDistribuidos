@@ -8,4 +8,5 @@ router.get("/registrations", Registraton_controller_1.getRegistrations);
 router.delete("/registration", Registraton_controller_1.deleteRegistration);
 router.get("/registration/:id_Students", Registraton_controller_1.getRegistration);
 router.get("/subjectsPerStudent/:id_Students", Registraton_controller_1.getSubjectsByStudent);
+router.get("/StudentsPerSubject/:id_Subject", Registraton_controller_1.getStudentsBySubject);
 exports.default = router;

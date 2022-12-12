@@ -7,7 +7,7 @@ import { Authentication } from "./Entities/Auth";
 
 export const appDataSource = new DataSource({
     type: "postgres",
-    url: "postgres://db_inscriptions_hafy_user:fcer4bUbQzhpE45ix5JW6yA2e5PLcHuE@dpg-ceb22firrk0bbtdldn8g-a.oregon-postgres.render.com/db_inscriptions_hafy",
+    url: "postgres://db_inscriptionsorm_user:zr3aU5JxP2Az4OIXagszL8mlcq07eGxl@dpg-cebpmp4gqg4ap49i31tg-a.oregon-postgres.render.com/db_inscriptionsorm",
     synchronize: true,
     logging: true,
     extra: {

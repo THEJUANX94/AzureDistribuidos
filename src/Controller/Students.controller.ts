@@ -3,6 +3,30 @@ import { Students } from '../Entities/Students'
 import azureStorage from 'azure-storage';
 import getStream from 'into-stream';
 
+function getRandomInt(max:number) {
+    return Math.floor(Math.random() * max);
+  }
+
+export const quemarEstudiantes =async (req: Request, res: Response) => {
+    var documentsRandom = 0;
+    var documentTypeRandom : string[] = ['cc', 'ti']
+    var firtsNameRandom : string[] = ['Juan', 'Karla', 'Camilo', 'Oscar', 'Pablo', 'Angela']
+    var lastNameRandom: string[] = ['Martinez', 'Noreña', 'Pajaro', 'Gil', 'Sosa', 'Marin']
+    var stateRandom: string[] = ['true', 'false']
+    var imagenes: string[] = ["https://imagesdistribuidos.blob.core.windows.net/imagenes/7857355872564389-11059544_693507024084102_1114472125510915333_n.jpg", "https://imagesdistribuidos.blob.core.windows.net/imagenes/2353379249340246-Maes_Hughes_party.JPG", "https://imagesdistribuidos.blob.core.windows.net/imagenes/6377887057524709-MF_Splash_1280x1024.jpg"]
+    for (let index = 0; index < 100000; index++) {
+        const student = new Students()
+        documentsRandom = getRandomInt(10000000000)
+        student.Document = documentsRandom.toString()
+        student.DocumentType = documentTypeRandom[getRandomInt(2)]
+        student.FirstName = firtsNameRandom[getRandomInt(6)]
+        student.LastName = lastNameRandom[getRandomInt(6)]
+        student.state = true;
+        student.ImagePath = imagenes[getRandomInt(3)]
+        student.save()
+    }
+}
+
 export const createStudent = async (req: Request, res: Response) => {
     try {
         const blobService = azureStorage.createBlobService("DefaultEndpointsProtocol=https;AccountName=imagesdistribuidos;AccountKey=04FMn5l0Obo62znCyu5MkTNDacdQ5OnImHWigbfmNWE4fhXHRV4ifPaGQXjyFZQVrJOYCTgnsK9J+AStxOINAg==;EndpointSuffix=core.windows.net");

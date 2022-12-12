@@ -28,7 +28,7 @@ let Authentication = class Authentication extends typeorm_1.BaseEntity {
     }
 };
 __decorate([
-    (0, typeorm_1.PrimaryColumn)(),
+    (0, typeorm_1.PrimaryColumn)({ unique: true }),
     __metadata("design:type", String)
 ], Authentication.prototype, "Mail", void 0);
 __decorate([

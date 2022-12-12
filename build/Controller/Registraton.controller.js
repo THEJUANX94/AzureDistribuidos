@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSubjectsByStudent = exports.getRegistration = exports.deleteRegistration = exports.getRegistrations = exports.createRegistration = void 0;
+exports.getStudentsBySubject = exports.getSubjectsByStudent = exports.getRegistration = exports.deleteRegistration = exports.getRegistrations = exports.createRegistration = void 0;
 const redis_1 = require("redis");
 const Registration_1 = require("../Entities/Registration");
 const Students_1 = require("../Entities/Students");
@@ -83,12 +83,19 @@ exports.getRegistration = getRegistration;
 const getSubjectsByStudent = async (req, res) => {
     try {
         const { id_Students } = req.params;
+        const reply = await client.get("SubjectsByStudent");
+        if (reply)
+            return res.send(JSON.parse(reply));
         var subjectsName = [];
         const registratios = await Registration_1.Registration.findBy({ id_Students: parseInt(id_Students) });
         for (let index = 0; index < registratios.length; index++) {
             const subjects = registratios[index].id_Subjects;
             subjectsName[index] = await Subjects_1.Subject.findOneBy({ id: parseInt(subjects) });
         }
+        const saveResult = await client.set("SubjectsByStudent", JSON.stringify(subjectsName), {
+            EX: 15,
+        });
+        console.log(saveResult);
         return res.json(subjectsName);
     }
     catch (error) {
@@ -98,3 +105,28 @@ const getSubjectsByStudent = async (req, res) => {
     }
 };
 exports.getSubjectsByStudent = getSubjectsByStudent;
+const getStudentsBySubject = async (req, res) => {
+    try {
+        const { id_Subject } = req.params;
+        const reply = await client.get("StudentsBySubject");
+        if (reply)
+            return res.send(JSON.parse(reply));
+        var studentsName = [];
+        const registratios = await Registration_1.Registration.findBy({ id_Subjects: id_Subject });
+        for (let index = 0; index < registratios.length; index++) {
+            const students = registratios[index].id_Students;
+            studentsName[index] = await Students_1.Students.findOneBy({ id: students });
+        }
+        const saveResult = await client.set("StudentsBySubject", JSON.stringify(studentsName), {
+            EX: 15,
+        });
+        console.log(saveResult);
+        return res.json(studentsName);
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message });
+        }
+    }
+};
+exports.getStudentsBySubject = getStudentsBySubject;
