@@ -1,6 +1,5 @@
 import { Column, Entity, BaseEntity, PrimaryColumn, ManyToOne, JoinColumn } from 'typeorm'
 import bcrypt from "bcryptjs";
-import { rol } from './Role';
 
 
 @Entity('Authentication')
@@ -11,10 +10,6 @@ export class Authentication extends BaseEntity {
 
     @Column()
     Password: string
-
-    @ManyToOne(() => rol, (rol) => rol.id)
-    Roles: rol["id"][]
-
 
     public encryptPassword = async (password: string): Promise<string> => {
         const salt = await bcrypt.genSalt(10);

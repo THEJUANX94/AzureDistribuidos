@@ -3,28 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.profile = exports.signin = exports.signup = exports.seeRoles2 = exports.seeRoles1 = exports.createRoles = void 0;
+exports.profile = exports.signin = exports.signup = exports.seeRoles2 = exports.seeRoles1 = void 0;
 const Auth_1 = require("../Entities/Auth");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const Role_1 = require("../Entities/Role");
-const createRoles = async (req, res) => {
-    try {
-        const rol1 = new Role_1.rol();
-        const rol2 = new Role_1.rol();
-        const rol3 = new Role_1.rol();
-        rol1.name = 'user';
-        rol2.name = 'moderator';
-        rol3.name = 'admin';
-        rol1.save();
-        rol2.save();
-        rol3.save();
-        return res.json(rol3);
-    }
-    catch (error) {
-        console.error(error);
-    }
-};
-exports.createRoles = createRoles;
 const seeRoles1 = async (req, res) => {
     try {
         const students = await Auth_1.Authentication.delete({ Mail: "josemanuelpajarovargas@gmail.com" });
@@ -57,13 +38,6 @@ const signup = async (req, res) => {
         auth.Password = await auth.encryptPassword(Password);
     }
     const user = await Auth_1.Authentication.findOneBy({ Mail: req.body.Mail });
-    if (Roles) {
-        const foundRoles = await Role_1.rol.find();
-        auth.Roles = foundRoles.map(rol => rol.id);
-    }
-    else {
-        auth.Roles = [3];
-    }
     await auth.save();
     const token = jsonwebtoken_1.default.sign({ Mail: auth.Mail }, process.env.TOKEN_SECRET || 'tokentest');
     res.header('auth_token', token).json(user);

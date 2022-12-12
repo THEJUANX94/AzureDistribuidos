@@ -3,7 +3,6 @@ import { Students } from './Entities/Students'
 import { Subject } from './Entities/Subjects'
 import { Registration } from './Entities/Registration'
 import { Authentication } from "./Entities/Auth";
-import { rol } from './Entities/Role';
 
 
 export const appDataSource = new DataSource({
@@ -16,5 +15,5 @@ export const appDataSource = new DataSource({
             rejectUnauthorized: false
         },
     },
-    entities: [rol, Students, Subject, Registration, Authentication],
+    entities: [Students, Subject, Registration, Authentication],
 })

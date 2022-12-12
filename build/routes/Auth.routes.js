@@ -6,7 +6,6 @@ const verifyToken_1 = require("../libs/verifyToken");
 const router = (0, express_1.Router)();
 router.post('/signup', Auth_controller_1.signup);
 router.post('/signin', Auth_controller_1.signin);
-router.get('/rol', Auth_controller_1.createRoles);
 router.get('/seeRoles1', Auth_controller_1.seeRoles1);
 router.get('/seeRoles2', Auth_controller_1.seeRoles2);
 router.get('/profile', verifyToken_1.TokenValidation, Auth_controller_1.profile);
