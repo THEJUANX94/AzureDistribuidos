@@ -25,7 +25,7 @@ __decorate([
 ], Registration.prototype, "id_Students", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Registration.prototype, "id_Subjects", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),

@@ -8,7 +8,7 @@ export class Subject extends BaseEntity {
     id: number
 
     @Column()
-    SubjectCode: String
+    SubjectCode: string
 
     @Column()
     Name: String

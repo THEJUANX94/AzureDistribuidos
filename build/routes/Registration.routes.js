@@ -5,6 +5,7 @@ const Registraton_controller_1 = require("../Controller/Registraton.controller")
 const router = (0, express_1.Router)();
 router.post("/registration", Registraton_controller_1.createRegistration);
 router.get("/registrations", Registraton_controller_1.getRegistrations);
-router.delete("/registration/:id", Registraton_controller_1.deleteRegistration);
-router.get("/registration/:id", Registraton_controller_1.getRegistration);
+router.delete("/registration", Registraton_controller_1.deleteRegistration);
+router.get("/registration/:id_Students", Registraton_controller_1.getRegistration);
+router.get("/subjectsPerStudent/:id_Students", Registraton_controller_1.getSubjectsByStudent);
 exports.default = router;

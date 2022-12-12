@@ -31,7 +31,7 @@ const seeRoles2 = async (req, res) => {
 };
 exports.seeRoles2 = seeRoles2;
 const signup = async (req, res) => {
-    const { Mail, Password, Roles } = req.body;
+    const { Mail, Password } = req.body;
     const auth = new Auth_1.Authentication();
     auth.Mail = Mail;
     if (req.body.Password) {
@@ -47,8 +47,9 @@ const signin = async (req, res) => {
     try {
         if (req.body.Mail && req.body.Password) {
             const user = await Auth_1.Authentication.findOneBy({ Mail: req.body.Mail });
-            if (!user)
+            if (!user) {
                 return res.status(400).json('Email or password is wrong');
+            }
             const correctPassword = await user.validatePassword(req.body.Password);
             const token = jsonwebtoken_1.default.sign({ Mail: user.Mail }, process.env.TOKEN_SECRET || 'tokentest', {
                 expiresIn: 60 * 60 * 24

@@ -12,7 +12,7 @@ export class Registration extends BaseEntity {
     id_Students: number
 
     @Column()
-    id_Subjects: number
+    id_Subjects: string
 
     @CreateDateColumn()
     Date: Date

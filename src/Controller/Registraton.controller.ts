@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
-import { Registration } from '../Entities/Registration'
 import { createClient } from 'redis';
+import { FindOperator } from "typeorm";
+import { Registration } from '../Entities/Registration';
+import { Students } from "../Entities/Students";
+import { Subject } from "../Entities/Subjects";
 
 const client = createClient({
-    url : 'redis://default:sUNCCLtMzr4e7Ca2K8ADSTn9TKc7uLPS@redis-16497.c282.east-us-mz.azure.cloud.redislabs.com:16497'
+    url: 'redis://default:sUNCCLtMzr4e7Ca2K8ADSTn9TKc7uLPS@redis-16497.c282.east-us-mz.azure.cloud.redislabs.com:16497'
 });
 client.connect();
 
@@ -50,13 +53,20 @@ export const getRegistrations = async (req: Request, res: Response) => {
 
 export const deleteRegistration = async (req: Request, res: Response) => {
     try {
-        const { id_Students, id_Subjects } = req.params
+        const { Document_Student, Subjects_code } = req.body
 
-        const result = await Registration.delete({ id_Students: parseInt(id_Students), id_Subjects: parseInt(id_Subjects) })
+        const id_Students = await Students.findOneBy({ Document: Document_Student })
+        const id_Subjects = await Subject.findOneBy({ SubjectCode: Subjects_code })
 
-        if (result.affected === 0) {
-            return res.status(404).json({ message: 'User not found' })
+        if (id_Students && id_Subjects) {
+            const id_Registration = await Registration.findOneBy({ id_Students: id_Students.id})
+            const result = await Registration.delete({id: id_Registration?.id})
+
+            if (result.affected === 0) {
+                return res.status(404).json({ message: 'User not found' })
+            }
         }
+
         return res.sendStatus(204)
     } catch (error) {
         if (error instanceof Error) {
@@ -71,6 +81,23 @@ export const getRegistration = async (req: Request, res: Response) => {
         const { id_Students } = req.params
         const registration = await Registration.findOneBy({ id_Students: parseInt(id_Students) })
         return res.json(registration)
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message })
+        }
+    }
+}
+
+export const getSubjectsByStudent = async (req: Request, res: Response) => {
+    try {
+        const { id_Students } = req.params
+        var subjectsName: Subject[] = []
+        const registratios = await Registration.findBy({id_Students: parseInt(id_Students)})
+        for (let index = 0; index < registratios.length; index++) {
+            const subjects = registratios[index].id_Subjects
+            subjectsName[index] = await Subject.findOneBy({id: parseInt(subjects)}) as Subject
+        }
+        return res.json(subjectsName)
     } catch (error) {
         if (error instanceof Error) {
             return res.status(500).json({ message: error.message })
